@@ -7,6 +7,11 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FloatField,TextAreaField
 from wtforms.validators import DataRequired
 import requests
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+ENV = os.getenv("FLASK_ENV", "development")  # fallback is development
 movies=None
 '''
 Red underlines? Install the required packages first:
@@ -28,7 +33,10 @@ class Base(DeclarativeBase):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+if ENV == "testing":
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://abdulahad1015:danish786@abdulahad1015.mysql.pythonanywhere-services.com/abdulahad1015$movies_db'
 Bootstrap(app)
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
@@ -131,5 +139,8 @@ def delete():
     return redirect(url_for("home"))
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+if __name__ == "__main__":
+    if ENV == "development":
+        app.run(debug=True)
+    else:
+        app.run()

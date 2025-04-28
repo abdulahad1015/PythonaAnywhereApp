@@ -30,3 +30,6 @@ jobs:
     - name: Run tests
       run: |
         pytest
+    
+    - name: Set environment
+      run: echo "FLASK_ENV=testing" >> $GITHUB_ENV
