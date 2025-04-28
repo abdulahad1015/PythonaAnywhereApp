@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float
@@ -30,7 +30,7 @@ class Base(DeclarativeBase):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://abdulahad1015:danish786@abdulahad1015.mysql.pythonanywhere-services.com/abdulahad1015$movies_db'
-Bootstrap5(app)
+Bootstrap(app)
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
